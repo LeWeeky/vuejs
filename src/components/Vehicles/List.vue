@@ -87,6 +87,7 @@ const vehicles_available = computed(() => {
 				></v-text-field>
 			</v-col>
 		</v-row>
+		<h4>Filter by color</h4>
 		<v-row>
 			<v-col cols="12" md="4">
 			<v-combobox

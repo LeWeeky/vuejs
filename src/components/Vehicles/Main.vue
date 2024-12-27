@@ -6,6 +6,7 @@
 
 import { ref } from 'vue'
 import Container from '../Container.vue'
+import IconVehicle from '../Icons/IconVehicle.vue'
 import Add from './Add.vue'
 import List from './List.vue'
 
@@ -56,7 +57,7 @@ function removeVehicle(id)
 </script>
 
 <template>
-	<h1>Vehicles</h1>
+	<h1><IconVehicle /> Vehicles</h1>
 	<Container>
 		<Add @addvehicle="addVehicle"/>
 	</Container>

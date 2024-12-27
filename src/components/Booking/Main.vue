@@ -6,6 +6,7 @@
 
 import { ref } from 'vue'
 import Container from '../Container.vue'
+import IconBook from '../Icons/IconBook.vue'
 import Add from './Add.vue'
 import List from './List.vue'
 
@@ -62,7 +63,7 @@ function removeBooking(id)
 </script>
 
 <template>
-	<h1>Booking</h1>
+	<h1><IconBook /> Booking</h1>
 	<Container>
 		<Add @addbooking="addBooking" :bookings="bookings" :clients="clients" :vehicles="vehicles"/>
 	</Container>

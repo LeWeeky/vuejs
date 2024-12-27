@@ -6,6 +6,7 @@
 
 import { ref } from 'vue'
 import Container from '../Container.vue'
+import IconClient from '../Icons/IconClient.vue'
 import Add from './Add.vue'
 import List from './List.vue'
 
@@ -56,7 +57,7 @@ function removeClient(id)
 </script>
 
 <template>
-	<h1>Clients</h1>
+	<h1><IconClient /> Clients</h1>
 	<Container>
 		<Add @addclient="addClient"/>
 	</Container>

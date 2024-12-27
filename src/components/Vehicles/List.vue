@@ -21,6 +21,7 @@ const props		= defineProps({
 })
 const minimum_seats = ref(0);
 const maximum_seats = ref(0);
+const color	= ref("all");
 const minimum_rules	= [
 	value => {
 		if (value > -1) return true
@@ -37,14 +38,24 @@ const maximum_rules	= [
 		return 'Maximum cannot be less than minimum.'
 	}
 ];
+const	colors		= [
+	'all', 'red', 'pink', 'orange', 'yellow', 'green', 'blue', 'grey',
+	'purple', 'brown', 'white', 'black'
+]
 
 const vehicles_available = computed(() => {
+	minimum_seats.value = Number(minimum_seats.value);
+	maximum_seats.value = Number(maximum_seats.value)
 	return (
-		(minimum_seats.value !== 0 || maximum_seats.value !== 0)
+		(minimum_seats.value !== 0 || maximum_seats.value !== 0
+			|| color.value !== "all"
+		)
 		? props.vehicles.filter((vehicle) => {
-			return (vehicle.seats >= minimum_seats.value
-			&& (vehicle.seats <= maximum_seats.value
-				|| maximum_seats.value == 0
+			return (vehicle.seats >=  minimum_seats.value
+			&& (vehicle.seats <=  maximum_seats.value
+				||  maximum_seats.value == 0
+			) && (color.value == "all"
+				|| vehicle.color == color.value
 			))
 		})
 		: props.vehicles
@@ -61,6 +72,7 @@ const vehicles_available = computed(() => {
 				<v-text-field
 				v-model="minimum_seats"
 				:rules="minimum_rules"
+				type="number"
 				label="From"
 				required
 				></v-text-field>
@@ -69,10 +81,22 @@ const vehicles_available = computed(() => {
 				<v-text-field
 				v-model="maximum_seats"
 				:rules="maximum_rules"
+				type="number"
 				label="To"
 				required
 				></v-text-field>
 			</v-col>
+		</v-row>
+		<v-row>
+			<v-col cols="12" md="4">
+			<v-combobox
+				v-model="color"
+				:items="colors"
+				label="Color"
+				single
+				required
+			></v-combobox>
+		  </v-col>
 		</v-row>
 		<v-list v-if="vehicles && vehicles_available.length > 0" lines="two">
 			<v-list-item

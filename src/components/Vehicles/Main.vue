@@ -35,7 +35,7 @@ function addVehicle(model, color, seats)
 		id: id.value,
 		model: model,
 		color: color,
-		seats: seats
+		seats:  Number(seats)
 	})
 	console.log(`New vehicle: 
 		id: ${id.value}

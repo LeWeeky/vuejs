@@ -23,9 +23,9 @@ const show = reactive({
 })
 const clients	= ref([{
 	id: 1,
-	firstname: "Roméo",
-	lastname: "Barbiot",
-	email: "romeobarbiot@gmail.com"
+	firstname: "Hero",
+	lastname: "Brine",
+	email: "herobrine@minecraft.net"
 }]);
 const vehicles	= ref([{
 	id: 1,
@@ -63,6 +63,10 @@ function updateVehicles(data)
 	vehicles.value = data;
 }
 
+function updateBookings(data)
+{
+	bookings.value = data;
+}
 
 </script>
 
@@ -80,7 +84,7 @@ function updateVehicles(data)
 		<Vehicles @updatevehicles="updateVehicles" :vehicles="vehicles"/>
 	</Container>
 	<Container v-if="show['bookings']">
-		<Booking :bookings="bookings" :clients="clients" :vehicles="vehicles"/>
+		<Booking @updatebookings="updateBookings" :bookings="bookings" :clients="clients" :vehicles="vehicles"/>
 	</Container>
   </v-main>
 </v-app>

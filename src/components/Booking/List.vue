@@ -21,7 +21,6 @@ function fetchClient(id)
 	let result = "This client has been deleted."
 	props.clients.map(
 		(client) => {
-			console.log(client, client.id, id)
 			if (client.id == id)
 			{
 				result = `${client.firstname} ${client.lastname} | Contact → ${client.email}`;

@@ -10,6 +10,12 @@ import Add from './Add.vue'
 import List from './List.vue'
 
 ////////////////////////////////////////////////////
+/////				 Events					   /////
+////////////////////////////////////////////////////
+
+const	emit		= defineEmits(['updatebookings'])
+
+////////////////////////////////////////////////////
 /////				 Variables				   /////
 ////////////////////////////////////////////////////
 
@@ -47,7 +53,7 @@ function addBooking(vehicle_id, client_id, start_date, end_date)
 
 function removeBooking(id)
 {
-	booking.value = props.bookings.filter(book => book.id != id)
+	emit('updatebookings', props.bookings.filter(book => book.id != id))
 	console.log(`Book removed: 
 		id: ${id}`
 	)

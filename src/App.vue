@@ -1,24 +1,69 @@
 <script setup>
-import { reactive } from 'vue'
 
-// import TheWelcome from './components/TheWelcome.vue'
+////////////////////////////////////////////////////
+/////				Dependencies			   /////
+////////////////////////////////////////////////////
+
+import { ref, reactive } from 'vue'
+
 import Container from './components/Container.vue'
 import Navigation from './components/Navigation.vue'
 import Clients from './components/Clients/Main.vue'
-import Cars from './components/Cars/Main.vue'
+import Vehicles from './components/Vehicles/Main.vue'
 import Booking from './components/Booking/Main.vue'
+
+////////////////////////////////////////////////////
+/////				 Variables				   /////
+////////////////////////////////////////////////////
 
 const show = reactive({
 	clients: true,
-	cars: true,
-	booking: true
+	vehicles: true,
+	bookings: true
 })
+const clients	= ref([{
+	id: 1,
+	firstname: "Roméo",
+	lastname: "Barbiot",
+	email: "romeobarbiot@gmail.com"
+}]);
+const vehicles	= ref([{
+	id: 1,
+	model: "BMW-Z3",
+	color: "grey",
+	seats: "2"
+}]);
+const bookings	= ref([{
+	id: 1,
+	vehicle_id: 1,
+	client_id: 1,
+	date: {
+		start: new Date("2024-12-31"),
+		end: new Date("2025-12-31")
+	}
+}]);
+
+////////////////////////////////////////////////////
+/////				 Methods				   /////
+////////////////////////////////////////////////////
 
 function toggleShow(element)
 {
 	show[element] = !show[element];
-	// console.log(element, show[element])
+	console.log(`${element} display has been set to ${show[element]}`)
 }
+
+function updateClients(data)
+{
+	clients.value = data;
+}
+
+function updateVehicles(data)
+{
+	vehicles.value = data;
+}
+
+
 </script>
 
 <template>
@@ -29,14 +74,13 @@ function toggleShow(element)
   
   <v-main>
 	<Container v-if="show['clients']">
-		<Clients />
+		<Clients @updateclients="updateClients" :clients="clients"/>
 	</Container>
-    <!-- <Clients v-if="show['clients']" /> -->
-	<Container v-if="show['cars']">
-		<Cars />
+	<Container v-if="show['vehicles']">
+		<Vehicles @updatevehicles="updateVehicles" :vehicles="vehicles"/>
 	</Container>
-	<Container v-if="show['booking']">
-		<Booking />
+	<Container v-if="show['bookings']">
+		<Booking :bookings="bookings" :clients="clients" :vehicles="vehicles"/>
 	</Container>
   </v-main>
 </v-app>

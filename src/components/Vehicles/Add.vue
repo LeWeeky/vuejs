@@ -6,39 +6,53 @@ import { ref } from 'vue'
 /////				 Events					   /////
 ////////////////////////////////////////////////////
 
-const	emit		= defineEmits(['addclient'])
+const	emit		= defineEmits(['addvehicle'])
 
 ////////////////////////////////////////////////////
 /////				 Variables				   /////
 ////////////////////////////////////////////////////
 
 const	valid		= ref(false);
-const	firstname	= ref('');
-const	lastname	= ref('');
-const	email		= ref('');
+const	model		= ref('');
+const	color		= ref('');
+const	seats		= ref('');
+const	colors		= [
+	'red', 'pink', 'orange', 'yellow', 'green', 'blue', 'grey',
+	'purple', 'brown', 'white', 'black'
+]
 
 ////////////////////////////////////////////////////
 /////				 Rules					   /////
 ////////////////////////////////////////////////////
 
-const	name_rules	= [
+const	model_rules	= [
 	value => {
 		if (value) return true
-		return 'Name is required.'
+		return 'Model is required.'
 	},
 	value => {
 		if (value?.length <= 16) return true
 		return 'Name must be less than 16 characters.'
 	},
 ];
-const	email_rules	= [
+const	color_rules	= [
 	value => {
 		if (value) return true
-		return 'E-mail is required.'
+		return 'Color is required.'
 	},
 	value => {
-		if (/.+@.+\..+/.test(value)) return true
-		return 'E-mail must be valid.'
+		if (value?.length <= 16) return true
+		return 'Color must be less than 6 characters.'
+	},
+];
+const	seats_rules	= [
+	value => {
+		if (value) return true
+		return 'Number of seats is required.'
+	},
+	value => {
+		if (value > 0) return true
+		return 'There must be at least 1 seat.'
 	}
 ];
 
@@ -48,7 +62,7 @@ const	email_rules	= [
 
 function showValidation()
 {
-	const button = document.getElementById("addclient")
+	const button = document.getElementById("addvehicle")
 	
 	if (!button)
 		return ;
@@ -61,14 +75,14 @@ function showValidation()
 	}, 2000)
 }
 
-function addClient()
+function addVehicle()
 {
 	if (valid.value)
 	{
-		emit('addclient',
-		firstname.value,
-		lastname.value,
-		email.value
+		emit('addvehicle',
+			model.value,
+			color.value,
+			seats.value
 		);
 		showValidation()
 	}
@@ -79,39 +93,39 @@ function addClient()
 </script>
 
 <template>
-	<v-form v-model="valid" @submit.prevent="addClient">
+	<v-form v-model="valid" @submit.prevent="addVehicle">
 	  <v-container>
 		<v-row>
+			<v-col cols="12" md="4">
+				<v-text-field
+				v-model="model"
+				:counter="16"
+				:rules="model_rules"
+				label="Model"
+				required
+				></v-text-field>
+			</v-col>
+  
 		  <v-col cols="12" md="4">
-			<v-text-field
-			  v-model="firstname"
-			  :counter="16"
-			  :rules="name_rules"
-			  label="First name"
-			  required
-			></v-text-field>
+			<v-combobox
+				v-model="color"
+				:items="colors"
+				label="Color"
+				single
+				required
+			></v-combobox>
 		  </v-col>
   
 		  <v-col cols="12" md="4">
 			<v-text-field
-			  v-model="lastname"
-			  :counter="16"
-			  :rules="name_rules"
-			  label="Last name"
-			  required
-			></v-text-field>
-		  </v-col>
-  
-		  <v-col cols="12" md="4">
-			<v-text-field
-			  v-model="email"
-			  :rules="email_rules"
-			  label="E-mail"
+			  v-model="seats"
+			  :rules="seats_rules"
+			  label="Seats"
 			  required
 			></v-text-field>
 		  </v-col>
 		</v-row>
-		<v-btn class="mt-2" type="submit" id="addclient" block>
+		<v-btn class="mt-2" type="submit" id="addvehicle" block>
 			Submit
 		</v-btn>
 	  </v-container>

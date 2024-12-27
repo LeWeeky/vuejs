@@ -13,14 +13,14 @@ import List from './List.vue'
 /////				 Events					   /////
 ////////////////////////////////////////////////////
 
-const	emit		= defineEmits(['updateclients'])
+const	emit		= defineEmits(['updatevehicles'])
 
 ////////////////////////////////////////////////////
 /////				 Variables				   /////
 ////////////////////////////////////////////////////
 
 const props = defineProps({
-	clients: Array
+	vehicles: Array
 })
 const id		= ref(1);
 
@@ -28,27 +28,27 @@ const id		= ref(1);
 /////				 Methods				   /////
 ////////////////////////////////////////////////////
 
-function addClient(firstname, lastname, email)
+function addVehicle(model, color, seats)
 {
 	id.value++;
-	props.clients.push({
+	props.vehicles.push({
 		id: id.value,
-		firstname: firstname,
-		lastname: lastname,
-		email: email
+		model: model,
+		color: color,
+		seats: seats
 	})
-	console.log(`New client: 
-		id: ${id.value}
-		Firstname: ${firstname.value}
-		Lastname: ${lastname.value}
-		email: ${email.value}`
+	console.log(`New vehicle: 
+		id: ${id}
+		model ${model}
+		color: ${color}
+		seats: ${seats}`
 	)
 }
 
-function removeClient(id)
+function removeVehicle(id)
 {
-	emit('updateclients', props.clients.filter(client => client.id != id));
-	console.log(`Client removed: 
+	emit('updatevehicles', props.vehicles.filter(vehicle => vehicle.id != id));
+	console.log(`Vehicle removed: 
 		id: ${id}`
 	)
 }
@@ -56,11 +56,11 @@ function removeClient(id)
 </script>
 
 <template>
-	<h1>Clients</h1>
+	<h1>Vehicles</h1>
 	<Container>
-		<Add @addclient="addClient"/>
+		<Add @addvehicle="addVehicle"/>
 	</Container>
 	<Container>
-		<List @removeclient="removeClient" :clients="props.clients"/>
+		<List @removevehicle="removeVehicle" :vehicles="props.vehicles"/>
 	</Container>
 </template>

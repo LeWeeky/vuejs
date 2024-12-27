@@ -14,21 +14,28 @@ const props = defineProps({
 	clients: Array
 })
 
-////////////////////////////////////////////////////
-/////				 Methods				   /////
-////////////////////////////////////////////////////
-
+console.log(props.clients) 
 </script>
 
 <template>
-	<h1>Clients List</h1>
-		<v-list lines="one">
+	<h3>List</h3>
+		<v-list lines="two">
 			<v-list-item
 				v-for="client in clients"
 				:key="client.id"
-				:title="'Item ' + client.fisrtname"
-				subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit"
+				:title="`Client: ${client.id}`"
 			>
+				<v-container>
+					<v-card-text>
+						Firstname: {{ client.firstname }} <br>
+						Lastname: {{ client.lastname }}	<br>
+						E-Mail: {{ client.email }} <br>
+					</v-card-text>
+					<v-card-actions>
+						<v-btn @click="emit('removeclient', client.id)">X Remove</v-btn>
+					</v-card-actions>
+				</v-container>
 			</v-list-item>
+			
 		</v-list>
 </template>

@@ -8,25 +8,25 @@ import List from './List.vue'
 const id		= ref(0);
 const clients	= ref([{
 	id: 0,
-	firstname: "TemplateName",
-	secondname: "TemplateName",
-	email: "TemplateMail"
+	firstname: "Roméo",
+	lastname: "Barbiot",
+	email: "romeobarbiot@gmail.com"
 }]);
 
-function addClient(firstname, secondname, email)
+function addClient(firstname, lastname, email)
 {
 	id.value++;
 	clients.value.push({
 		id: id.value,
 		firstname: firstname,
-		secondname: secondname,
+		lastname: lastname,
 		email: email
 	})
 }
 
 function removeClient(id)
 {
-	clients = clients.value.filter(client => client.id != id)
+	clients.value = clients.value.filter(client => client.id != id)
 }
 
 </script>
@@ -37,6 +37,6 @@ function removeClient(id)
 		<Add @addclient="addClient"/>
 	</Container>
 	<Container>
-		<List @removeclient="removeClient" :clients="clients.value"/>
+		<List @removeclient="removeClient" :clients="clients"/>
 	</Container>
 </template>

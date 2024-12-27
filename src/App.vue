@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { reactive } from 'vue'
 
 // import TheWelcome from './components/TheWelcome.vue'
 import Container from './components/Container.vue'
@@ -24,7 +24,7 @@ function toggleShow(element)
 <template>
 <v-app>
   <header>
-		<Navigation @toggle="toggleShow"/>
+		<Navigation @toggle="toggleShow" :show="show"/>
   </header>
   
   <v-main>

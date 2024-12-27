@@ -27,8 +27,8 @@ const	nameRules	= [
 		return 'Name is required.'
 	},
 	value => {
-		if (value?.length <= 20) return true
-		return 'Name must be less than 20 characters.'
+		if (value?.length <= 16) return true
+		return 'Name must be less than 16 characters.'
 	},
 ];
 const	emailRules	= [
@@ -85,7 +85,7 @@ function addClient()
 		  <v-col cols="12" md="4">
 			<v-text-field
 			  v-model="firstname"
-			  :counter="10"
+			  :counter="16"
 			  :rules="nameRules"
 			  label="First name"
 			  required
@@ -95,7 +95,7 @@ function addClient()
 		  <v-col cols="12" md="4">
 			<v-text-field
 			  v-model="lastname"
-			  :counter="10"
+			  :counter="16"
 			  :rules="nameRules"
 			  label="Last name"
 			  required

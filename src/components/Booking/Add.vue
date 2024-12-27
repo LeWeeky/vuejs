@@ -1,7 +1,12 @@
 <script setup>
 
+////////////////////////////////////////////////////
+/////				Dependencies			   /////
+////////////////////////////////////////////////////
+
 import { computed } from 'vue';
 import { ref } from 'vue'
+import SubmitButton from '../Buttons/Submit.vue'
 
 ////////////////////////////////////////////////////
 /////				 Events					   /////
@@ -59,21 +64,6 @@ const	end_rules	= [
 ////////////////////////////////////////////////////
 /////				 Methods				   /////
 ////////////////////////////////////////////////////
-
-function showValidation()
-{
-	const button = document.getElementById("addbooking")
-	
-	if (!button)
-		return ;
-
-	const text = button.innerHTML;
-
-	button.innerHTML = "OK !"
-	setTimeout(() => {
-		button.innerHTML = text;
-	}, 2000)
-}
 
 function addBooking()
 {
@@ -188,9 +178,7 @@ function updateEndDate(new_date)
 					</v-date-input>
 				</v-col>
 			</v-row>
-			<v-btn class="mt-2" type="submit" id="addbooking" block>
-				Submit
-			</v-btn>
+			<SubmitButton button_id="addbooking" />
 	 	</v-container>
 	</v-form>
 </template>

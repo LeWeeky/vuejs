@@ -1,6 +1,11 @@
 <script setup>
 
+////////////////////////////////////////////////////
+/////				Dependencies			   /////
+////////////////////////////////////////////////////
+
 import { ref } from 'vue'
+import SubmitButton from '../Buttons/Submit.vue'
 
 ////////////////////////////////////////////////////
 /////				 Events					   /////
@@ -60,21 +65,6 @@ const	seats_rules	= [
 /////				 Methods				   /////
 ////////////////////////////////////////////////////
 
-function showValidation()
-{
-	const button = document.getElementById("addvehicle")
-	
-	if (!button)
-		return ;
-
-	const text = button.innerHTML;
-
-	button.innerHTML = "OK !"
-	setTimeout(() => {
-		button.innerHTML = text;
-	}, 2000)
-}
-
 function addVehicle()
 {
 	if (valid.value)
@@ -84,7 +74,6 @@ function addVehicle()
 			color.value,
 			seats.value
 		);
-		showValidation()
 	}
 	else
 		console.log('Form is invalid.');
@@ -125,9 +114,7 @@ function addVehicle()
 			></v-text-field>
 		  </v-col>
 		</v-row>
-		<v-btn class="mt-2" type="submit" id="addvehicle" block>
-			Submit
-		</v-btn>
+		<SubmitButton button_id="addvehicle"/>
 	  </v-container>
 	</v-form>
 </template>

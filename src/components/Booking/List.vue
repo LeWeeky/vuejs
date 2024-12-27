@@ -18,24 +18,39 @@ const props = defineProps({
 
 function fetchClient(id)
 {
+	let result = "This client has been deleted."
 	props.clients.map(
 		(client) => {
+			console.log(client, client.id, id)
 			if (client.id == id)
-				return (`${client.firstname} ${client.lastname}\nContact: ${client.email}`)
+			{
+				result = `${client.firstname} ${client.lastname} | Contact → ${client.email}`;
+				return ;
+			}
 		}
 	)
-	return ("This client has been deleted.");
+	return (result);
 }
 
 function fetchVehicle(id)
 {
+	let result = "This vehicle has been deleted.";
+	let seats;
+
 	props.vehicles.map(
 		(vehicle) => {
 			if (vehicle.id == id)
-				return (`${vehicle.model} ${vehicle.model} ${vehicle.seats} seats`)
+			{
+				if (vehicle.seats > 1)
+					seats = "seats"
+				else
+					seats = "seat"
+				result = `${vehicle.model} ${vehicle.color} ${vehicle.seats} ${seats}`;
+				return ;
+			}
 		}
 	)
-	return ("This vehicle has been deleted.");
+	return (result);
 }
 
 </script>

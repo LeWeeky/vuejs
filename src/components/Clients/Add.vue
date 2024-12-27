@@ -1,6 +1,12 @@
 <script setup>
 
+////////////////////////////////////////////////////
+/////				Dependencies			   /////
+////////////////////////////////////////////////////
+
 import { ref } from 'vue'
+import SubmitButton from '../Buttons/Submit.vue'
+
 
 ////////////////////////////////////////////////////
 /////				 Events					   /////
@@ -45,21 +51,6 @@ const	email_rules	= [
 ////////////////////////////////////////////////////
 /////				 Methods				   /////
 ////////////////////////////////////////////////////
-
-function showValidation()
-{
-	const button = document.getElementById("addclient")
-	
-	if (!button)
-		return ;
-
-	const text = button.innerHTML;
-
-	button.innerHTML = "OK !"
-	setTimeout(() => {
-		button.innerHTML = text;
-	}, 2000)
-}
 
 function addClient()
 {
@@ -111,9 +102,7 @@ function addClient()
 			></v-text-field>
 		  </v-col>
 		</v-row>
-		<v-btn class="mt-2" type="submit" id="addclient" block>
-			Submit
-		</v-btn>
+		<SubmitButton button_id="addclient "/>
 	  </v-container>
 	</v-form>
 </template>

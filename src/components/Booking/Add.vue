@@ -20,7 +20,8 @@ const	emit		= defineEmits(['addbooking'])
 
 const props = defineProps({
 	vehicles: Array,
-	clients: Array
+	clients: Array,
+	bookings: Array
 })
 
 const	date		= new Date()
@@ -34,12 +35,26 @@ const	end_date	= ref(date);
 /////				 Rules					   /////
 ////////////////////////////////////////////////////
 
-const	id_rules	= [
+const	client_rules	= [
 	value => {
 		if (value) return true
-		return 'Pleaze select an option.'
+		return 'Pleaze select a client.'
 	}
 ];
+
+const	vehicle_rules	= [
+	value => {
+		if (value) return true
+		return 'Pleaze select a vehicle.'
+	},
+	value => {
+		const date = vehicleIsBooked(value)
+		if (!date) return true
+		return `This vehicle is already in use from ${date.start} to ${date.end}.`
+	},
+];
+
+
 
 const	start_rules	= [
 	value => {
@@ -77,6 +92,58 @@ function addBooking()
 	}
 	else
 		console.log('Form is invalid.');
+}
+
+function getVehicleBookings(vehicle_id)
+{
+	const bookings = [];
+
+	props.bookings.map(
+		(book) => {
+			console.log("book", book.vehicle_id)
+			if (book.vehicle_id == vehicle_id)
+				bookings.push(book)
+		}
+	)
+	return (bookings);
+}
+
+function dateIsBooked(date, start, end)
+{
+	return (date >= start && date <= end);
+}
+
+function vehicleIsBooked(vehicle_id)
+{
+	console.log("vehicule", vehicle_id)
+	const bookings	= getVehicleBookings(vehicle_id)
+	const start		= start_date.value.getTime();
+	const end		= end_date.value.getTime();
+
+	for (let i = 0; i < bookings.length; i++)
+	{
+		console.log("book", bookings[i]["date"])
+
+		if (dateIsBooked(bookings[i]["date"].start.getTime(), start, end))
+		{
+			return ({
+				start:
+					bookings[i]["date"].start.toLocaleDateString(),
+				end:
+					bookings[i]["date"].end.toLocaleDateString()
+			});
+		}
+		if (dateIsBooked(bookings[i]["date"].end.getTime(), start, end))
+		{
+			return ({
+				start:
+					bookings[i]["date"].start.toLocaleDateString(),
+				end:
+					bookings[i]["date"].end.toLocaleDateString()
+			});
+		}
+	}
+	return (false);
 }
 
 const vehicles_options = computed(() => {
@@ -129,7 +196,7 @@ function updateEndDate(new_date)
 					<v-select
 					v-model="vehicle_id"
 					:items="vehicles_options"
-					:rules="id_rules"
+					:rules="vehicle_rules"
 					item-value="value" item-title="label"
 					label="Vehicle"
 					single
@@ -141,7 +208,7 @@ function updateEndDate(new_date)
 					<v-select
 					v-model="client_id"
 					:items="clients_options"
-					:rules="id_rules"
+					:rules="client_rules"
 					item-value="value" item-title="label"
 					label="Client"
 					single

@@ -1,0 +1,34 @@
+<script setup>
+
+////////////////////////////////////////////////////
+/////				 Events					   /////
+////////////////////////////////////////////////////
+
+const	emit		= defineEmits(['removeclient'])
+
+////////////////////////////////////////////////////
+/////				 Variables				   /////
+////////////////////////////////////////////////////
+
+const props = defineProps({
+	clients: Array
+})
+
+////////////////////////////////////////////////////
+/////				 Methods				   /////
+////////////////////////////////////////////////////
+
+</script>
+
+<template>
+	<h1>Clients List</h1>
+		<v-list lines="one">
+			<v-list-item
+				v-for="client in clients"
+				:key="client.id"
+				:title="'Item ' + client.fisrtname"
+				subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit"
+			>
+			</v-list-item>
+		</v-list>
+</template>

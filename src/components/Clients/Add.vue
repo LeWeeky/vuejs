@@ -61,7 +61,6 @@ function addClient()
 		lastname.value,
 		email.value
 		);
-		showValidation()
 	}
 	else
 		console.log('Form is invalid.');

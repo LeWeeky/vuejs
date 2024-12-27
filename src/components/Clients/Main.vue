@@ -39,9 +39,9 @@ function addClient(firstname, lastname, email)
 	})
 	console.log(`New client: 
 		id: ${id.value}
-		Firstname: ${firstname.value}
-		Lastname: ${lastname.value}
-		email: ${email.value}`
+		Firstname: ${firstname}
+		Lastname: ${lastname}
+		email: ${email}`
 	)
 }
 

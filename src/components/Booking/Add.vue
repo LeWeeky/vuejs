@@ -55,7 +55,6 @@ const	end_rules	= [
 		return 'Start date is required.'
 	},
 	value => {
-		// console.log(new Date(value), start_date.value)
 		if (new Date(value).getTime() >= start_date.value.getTime()) return true
 			return 'End day must be after start day.'
 	},
@@ -79,8 +78,6 @@ function addBooking()
 	else
 		console.log('Form is invalid.');
 }
-
-//function vehicleIsAvailable()
 
 const vehicles_options = computed(() => {
 	const options = [];
@@ -113,13 +110,11 @@ const clients_options = computed(() => {
 function updateStartDate(new_date)
 {
 	start_date.value = new_date;
-	console.log(new_date)
 }
 
 function updateEndDate(new_date)
 {
 	end_date.value = new_date;
-	console.log(new_date)
 }
 
 </script>
@@ -129,9 +124,7 @@ function updateEndDate(new_date)
 	  	<v-container>
 			<v-row
 				class="d-flex justify-center align-center"
-				align="center"
-				justify="center"
-  				>
+  			>
 				<v-col cols="12" md="4">
 					<v-select
 					v-model="vehicle_id"
@@ -158,8 +151,6 @@ function updateEndDate(new_date)
 			</v-row>
 			<v-row
 				class="d-flex justify-center align-center"
-				align="center"
-				justify="center"
 			>
 				<v-col cols="12" md="4">
 					<v-date-input
@@ -172,6 +163,7 @@ function updateEndDate(new_date)
 				<v-col cols="12" md="4">
 					<v-date-input
 					:rules="end_rules"
+					@update:modelValue="updateEndDate"
 					label="End date"
 					required>
 					</v-date-input>

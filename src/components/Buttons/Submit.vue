@@ -1,10 +1,13 @@
 <script setup>
 const props = defineProps({
-	button_id: String
+	button_id: String,
+	valid: Boolean
 })
 
 function showValidation()
 {
+	if (!props.valid)
+		return ;
 	const button = document.getElementById(props.button_id)
 	
 	if (!button)

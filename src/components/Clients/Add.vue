@@ -102,7 +102,7 @@ function addClient()
 			></v-text-field>
 		  </v-col>
 		</v-row>
-		<SubmitButton button_id="addclient "/>
+		<SubmitButton button_id="addclient" :valid="valid"/>
 	  </v-container>
 	</v-form>
 </template>

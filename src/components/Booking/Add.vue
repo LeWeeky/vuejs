@@ -75,7 +75,6 @@ function addBooking()
 			start_date.value,
 			end_date.value
 		);
-		showValidation()
 	}
 	else
 		console.log('Form is invalid.');
@@ -178,7 +177,7 @@ function updateEndDate(new_date)
 					</v-date-input>
 				</v-col>
 			</v-row>
-			<SubmitButton button_id="addbooking" />
+			<SubmitButton button_id="addbooking" :valid="valid"/>
 	 	</v-container>
 	</v-form>
 </template>

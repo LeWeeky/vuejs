@@ -99,6 +99,7 @@ function addVehicle()
 			<v-combobox
 				v-model="color"
 				:items="colors"
+				:rules="color_rules"
 				label="Color"
 				single
 				required
@@ -114,7 +115,7 @@ function addVehicle()
 			></v-text-field>
 		  </v-col>
 		</v-row>
-		<SubmitButton button_id="addvehicle"/>
+		<SubmitButton button_id="addvehicle" :valid="valid" />
 	  </v-container>
 	</v-form>
 </template>

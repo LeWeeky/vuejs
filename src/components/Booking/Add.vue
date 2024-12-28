@@ -4,8 +4,7 @@
 /////				Dependencies			   /////
 ////////////////////////////////////////////////////
 
-import { computed } from 'vue';
-import { ref } from 'vue'
+import { computed, ref } from 'vue';
 import SubmitButton from '../Buttons/Submit.vue'
 
 ////////////////////////////////////////////////////
@@ -24,12 +23,18 @@ const props = defineProps({
 	bookings: Array
 })
 
-const	date		= new Date()
-const	valid		= ref(false);
-const	vehicle_id	= ref('');
-const	client_id	= ref('');
-const	start_date	= ref(date);
-const	end_date	= ref(date);
+const	date			= new Date()
+const	valid			= ref(false);
+const	ready			= ref({
+	vehicle: false,
+	client: false,
+	start_date: false,
+	end_date: false,
+})
+const	vehicle_id		= ref('');
+const	client_id		= ref('');
+const	start_date		= ref(date);
+const	end_date		= ref(date);
 
 ////////////////////////////////////////////////////
 /////				 Rules					   /////
@@ -37,7 +42,12 @@ const	end_date	= ref(date);
 
 const	client_rules	= [
 	value => {
-		if (value) return true
+		if (value)
+		{
+			ready.value.client = true;
+			return true
+		}
+		ready.value.client = false;
 		return 'Pleaze select a client.'
 	}
 ];
@@ -45,23 +55,36 @@ const	client_rules	= [
 const	vehicle_rules	= [
 	value => {
 		if (value) return true
+		ready.value.vehicle = false;
 		return 'Pleaze select a vehicle.'
 	},
 	value => {
 		const date = vehicleIsBooked(value)
-		if (!date) return true
+		ready.value.vehicle = true;
+
+		if (!date)
+			return true
 		return `This vehicle is already in use from ${date.start} to ${date.end}.`
 	},
 ];
-
-
 
 const	start_rules	= [
 	value => {
 		if (value) return true
 		return 'Start date is required.'
 	},
-	
+	value => {
+		start_date.value = new Date(value)
+		const date = vehicleIsBooked(vehicle_id.value)
+
+		if (!date)
+		{
+			ready.value.start_date = true;
+			valid.value = allRight();
+			return true
+		}
+		return `This vehicle is already in use from ${date.start} to ${date.end}.`
+	}
 ];
 
 const	end_rules	= [
@@ -70,14 +93,33 @@ const	end_rules	= [
 		return 'Start date is required.'
 	},
 	value => {
-		if (new Date(value).getTime() >= start_date.value.getTime()) return true
+		end_date.value = new Date(value)
+		if (end_date.value.getTime() >= start_date.value.getTime())
+		{
+			const date = vehicleIsBooked(vehicle_id.value)
+
+			if (!date)
+			{
+				ready.value.end_date = true;
+				valid.value = allRight();
+				return true
+			}
+			return `This vehicle is already in use from ${date.start} to ${date.end}.`
+		}
 			return 'End day must be after start day.'
-	},
+	}
 ];
 
 ////////////////////////////////////////////////////
 /////				 Methods				   /////
 ////////////////////////////////////////////////////
+
+function allRight()
+{
+	return (ready.value.client && ready.value.vehicle
+		&& ready.value.start_date && ready.value.end_date
+	);
+}
 
 function addBooking()
 {
@@ -100,7 +142,6 @@ function getVehicleBookings(vehicle_id)
 
 	props.bookings.map(
 		(book) => {
-			console.log("book", book.vehicle_id)
 			if (book.vehicle_id == vehicle_id)
 				bookings.push(book)
 		}
@@ -115,17 +156,17 @@ function dateIsBooked(date, start, end)
 
 function vehicleIsBooked(vehicle_id)
 {
-	console.log("vehicule", vehicle_id)
 	const bookings	= getVehicleBookings(vehicle_id)
 	const start		= start_date.value.getTime();
 	const end		= end_date.value.getTime();
 
 	for (let i = 0; i < bookings.length; i++)
 	{
-		console.log("book", bookings[i]["date"])
-
-		if (dateIsBooked(bookings[i]["date"].start.getTime(), start, end))
+		const book_start = bookings[i]["date"].start.getTime();
+		const book_end = bookings[i]["date"].end.getTime();
+		if (dateIsBooked(start, book_start, book_end))
 		{
+			ready.value.start_date = false;
 			return ({
 				start:
 					bookings[i]["date"].start.toLocaleDateString(),
@@ -133,8 +174,9 @@ function vehicleIsBooked(vehicle_id)
 					bookings[i]["date"].end.toLocaleDateString()
 			});
 		}
-		if (dateIsBooked(bookings[i]["date"].end.getTime(), start, end))
+		if (dateIsBooked(end, book_start, book_end))
 		{
+			ready.value.end_date = false;
 			return ({
 				start:
 					bookings[i]["date"].start.toLocaleDateString(),
@@ -143,7 +185,8 @@ function vehicleIsBooked(vehicle_id)
 			});
 		}
 	}
-	return (false);
+	ready.value.start_date = true;
+	ready.value.end_date = true;
 }
 
 const vehicles_options = computed(() => {

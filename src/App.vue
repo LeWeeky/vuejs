@@ -47,11 +47,6 @@ const bookings	= ref([{
 /////				 Methods				   /////
 ////////////////////////////////////////////////////
 
-function toggleShow(element)
-{
-	show[element] = !show[element];
-	console.log(`${element} display has been set to ${show[element]}`)
-}
 
 function updateClients(data)
 {
@@ -77,13 +72,13 @@ function updateBookings(data)
   </header>
   
   <v-main>
-	<Container v-if="show['clients']">
+	<Container id="clients">
 		<Clients @updateclients="updateClients" :clients="clients"/>
 	</Container>
-	<Container v-if="show['vehicles']">
+	<Container id="vehicles">
 		<Vehicles @updatevehicles="updateVehicles" :vehicles="vehicles"/>
 	</Container>
-	<Container v-if="show['bookings']">
+	<Container id="booking">
 		<Booking @updatebookings="updateBookings" :bookings="bookings" :clients="clients" :vehicles="vehicles"/>
 	</Container>
   </v-main>

@@ -1,12 +1,6 @@
 <script setup>
 
 ////////////////////////////////////////////////////
-/////				 Events					   /////
-////////////////////////////////////////////////////
-
-const emit = defineEmits(['toggle'])
-
-////////////////////////////////////////////////////
 /////				 Variables				   /////
 ////////////////////////////////////////////////////
 
@@ -19,8 +13,8 @@ const props = defineProps({
 <template>
 	<v-app-bar app>
 		<v-app-bar-title>Neo Mobility</v-app-bar-title>
-		<v-btn @click="emit('toggle', 'clients')"  :color="show['clients'] ? 'primary' : 'red'" >Clients</v-btn>
-		<v-btn @click="emit('toggle', 'vehicles')" :color="show['vehicles'] ? 'primary' : 'red'">Vehicles</v-btn>
-		<v-btn @click="emit('toggle', 'bookings')" :color="show['bookings'] ? 'primary' : 'red'">Booking</v-btn>
+		<v-btn href="#clients">Clients</v-btn>
+		<v-btn href="#vehicles">Vehicles</v-btn>
+		<v-btn href="#booking">Booking</v-btn>
 	</v-app-bar>
 </template>

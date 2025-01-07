@@ -11,13 +11,13 @@ import SubmitButton from '../Buttons/Submit.vue'
 /////				 Events					   /////
 ////////////////////////////////////////////////////
 
-const	emit		= defineEmits(['addbooking'])
+const	emit			= defineEmits(['addbooking'])
 
 ////////////////////////////////////////////////////
 /////				 Variables				   /////
 ////////////////////////////////////////////////////
 
-const props = defineProps({
+const props				= defineProps({
 	vehicles: Array,
 	clients: Array,
 	bookings: Array
